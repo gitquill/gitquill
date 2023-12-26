@@ -1,12 +1,11 @@
-import type { DataFunctionArgs } from '@remix-run/cloudflare'
+// app/routes/auth/github/callback.tsx
+import type { LoaderFunctionArgs } from '@remix-run/cloudflare'
 
 import { authenticator } from '~/services/auth.server'
 
-export const loader = async ({ request, params }: DataFunctionArgs) => {
-  let providerName = 'github'
-
-  return authenticator.authenticate(providerName, request, {
-    successRedirect: '/',
+export async function loader({ request }: LoaderFunctionArgs) {
+  return authenticator.authenticate('github', request, {
+    successRedirect: '/dashboard',
     failureRedirect: '/login',
   })
 }
